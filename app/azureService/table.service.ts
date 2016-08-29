@@ -15,9 +15,8 @@ export class TableService {
     authHeaderName: string;
     constructor (
         private http: Http,
-        private tokenService: TokenService) {
-            console.log('tableService ran');
-
+        private tokenService: TokenService
+    ) {
         this.tokenService.token$
             .subscribe(
                 token => this.token = token
@@ -34,10 +33,7 @@ export class TableService {
         let fullUrl = this.tableUrl + this.tableName;
 
         let headers = new Headers({ [this.authHeaderName]: this.token });
-
         let options = new RequestOptions({ headers: headers });
-        console.debug('headers: ', headers);
-        console.debug('options: ', options);
         return this.http.get(fullUrl, options)
             .map(this.extractData)
             .catch(this.handleError);
@@ -46,7 +42,7 @@ export class TableService {
         let fullUrl = this.tableUrl + this.tableName + '/' + id;
 
         let headers = new Headers({ [this.authHeaderName]: this.token });
-
+        let options = new RequestOptions({ headers: headers });
         return this.http.get(fullUrl)
             .map(this.extractData)
             .catch(this.handleError);
@@ -79,8 +75,8 @@ export class TableService {
         let fullUrl = this.tableUrl + this.tableName + '/' + id;
 
         let headers = new Headers({ [this.authHeaderName]: this.token });
-
-        return this.http.delete(fullUrl)
+        let options = new RequestOptions({ headers: headers });
+        return this.http.delete(fullUrl, options)
             .map(this.extractData)
             .catch(this.handleError);
     }

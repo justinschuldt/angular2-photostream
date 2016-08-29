@@ -15,8 +15,8 @@ export class ApiService {
     authHeaderName: string;
     constructor(
         private http: Http,
-        private tokenService: TokenService) {
-
+        private tokenService: TokenService
+    ) {
         this.tokenService.token$
             .subscribe(
                 token => this.token = token
@@ -32,7 +32,8 @@ export class ApiService {
         let fullUrl = this.apiUrl + this.routeName;
         let body = JSON.stringify(obj);
         let headers = new Headers({ [this.authHeaderName]: this.token });
-        headers.set('Content-Type', 'application/json');        let options = new RequestOptions({ headers: headers });
+        headers.set('Content-Type', 'application/json');
+        let options = new RequestOptions({ headers: headers });
         return this.http.post(fullUrl, body, options)
                         .map(this.extractData)
                         .catch(this.handleError);
@@ -41,7 +42,8 @@ export class ApiService {
         let fullUrl = this.apiUrl + this.routeName;
         let body = JSON.stringify(obj);
         let headers = new Headers({ [this.authHeaderName]: this.token });
-        headers.set('Content-Type', 'application/json');        let options = new RequestOptions({ headers: headers });
+        headers.set('Content-Type', 'application/json');
+        let options = new RequestOptions({ headers: headers });
         return this.http.put(fullUrl, body, options)
                         .map(this.extractData)
                         .catch(this.handleError);
