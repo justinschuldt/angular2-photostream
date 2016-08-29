@@ -13,6 +13,8 @@ import { CommonModule }      from '@angular/common';
 
 import { Observable }     from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/catch'
 
 // import {TableService} from './table.service';
 // import {ApiService} from './api.service';
@@ -21,38 +23,87 @@ import { Subject } from "rxjs/Subject";
 // import { AzureServiceConfig } from './azure.service';
 
 export class AzureServiceConfig {
-    url: string = 'http://asdf.com/';
-    authHeaderName: string = 'X-ZUMO-AUTH';
+    baseUrl: string = 'http://asdf.com/';
+    authHeaderName: string = 'ASDF-AUTH';
 }
 
 @Injectable()
 export class AzureService {
-    baseUrl: string = 'http://class-prop.com/';
-    authHeaderName: string = 'CUSTOM-AUTH';
+    private _baseUrl: string = 'http://class-property.com/';
+    private _authHeaderName: string = 'CLASS-AUTH';
+    private _token: string;
   constructor (
-    private http: Http
+    private http: Http,
+    @Optional() config: AzureServiceConfig
     // private tokenService: TokenService,
     // public tableService: TableService,
     // public apiService: ApiService
     ) {
         console.debug('azureService constructor ran');
-        // if (config) { this.baseUrl = config.url; };
-        // if (config.authHeaderName) {
-        //     this.authHeaderName = config.authHeaderName;
-        // };
+        if (config && config.baseUrl) { 
+            console.debug('config made it to azureService: ', config);
+            this._baseUrl = config.baseUrl; 
+        };
+        if (config && config.authHeaderName) {
+            this._authHeaderName = config.authHeaderName;
+        };
     }
-    someFun(input: string) {
-        return 'Guess that worked ' + input;
+
+    someFun(obj: {[key: string]: any}): Observable<any> {
+        console.debug('Guess that worked: ', obj)
+        let fullUrl = this._baseUrl + 'api/login';
+        let body = JSON.stringify(obj);
+        let headers = new Headers({ [this._authHeaderName]: '' });
+        headers.set('Content-Type', 'application/json');
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(fullUrl, body, options)
+                        .map(this.extractData)
+                        .catch(this.handleError);
+
     }
 
     setAuthToken(token: string): void{
-        this.tokenService.setAuthToken(token);
+        //this.tokenService.setAuthToken(token);
+        console.debug('token: ', token);
+
+        this._token = token;
+        console.debug('this._token: ', this._token);
+
     }
-    table(name: string): TableService{
-        return this.tableService.table(this.baseUrl, this.authHeaderName, name);
+    getImages(): Observable<any> {
+        console.log('inside getImages');
+        let fullUrl = this._baseUrl + 'tables/images';
+        // let headers = new Headers({ [this._authHeaderName]: this._token });
+        // console.debug('headers: ', headers);
+        // headers.set('Content-Type', 'application/json');
+        // let options = new RequestOptions({ headers: headers });
+        // console.debug('options: ', options);
+
+        let headers = new Headers({ [this._authHeaderName]: this._token });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.get(fullUrl, options)
+                        .map(this.extractData)
+                        .catch(this.handleError);
+
     }
-    api(name: string): ApiService {
-        return this.apiService.api(this.baseUrl, this.authHeaderName, name);
+    // table(name: string): TableService{
+    //     return this.tableService.table(this.baseUrl, this.authHeaderName, name);
+    // }
+    // api(name: string): ApiService {
+    //     return this.apiService.api(this.baseUrl, this.authHeaderName, name);
+    // }
+    private extractData(res: Response) {
+        console.debug('extractData res: ', res);
+        let body = res.json();
+        return body || { };
+    }
+    private handleError (error: any) {
+        // TODO add a logging service
+        console.log('handleError error: ', error);
+        let errMsg = (error.message) ? error.message :
+        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg); // log to console instead
+        return Observable.throw(errMsg);
     }
 }
 
