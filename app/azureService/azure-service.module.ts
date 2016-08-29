@@ -14,9 +14,9 @@ import {
 } from "./azure.service";
 
 @NgModule({})
-export class SharedModule {
+export class AzureServiceModule {
 
-  constructor (@Optional() @SkipSelf() parentModule: SharedModule) {
+  constructor (@Optional() @SkipSelf() parentModule: AzureServiceModule) {
     if (parentModule) {
       throw new Error(
         'CoreModule is already loaded. Import it in the AppModule only');
@@ -24,7 +24,7 @@ export class SharedModule {
   }
     static forRoot(config: AzureServiceConfig):ModuleWithProviders {
         return {
-            ngModule: SharedModule,
+            ngModule: AzureServiceModule,
             providers: [
                 {provide: AzureServiceConfig, useValue: config},
                 AzureService,
