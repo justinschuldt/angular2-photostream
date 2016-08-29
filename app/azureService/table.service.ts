@@ -29,7 +29,7 @@ export class TableService {
         this.tableName = name;
         return this;
     }
-    getAll(): Observable<any[]> {
+    getAll(): Observable<any> {
         let fullUrl = this.tableUrl + this.tableName;
 
         let headers = new Headers({ [this.authHeaderName]: this.token });

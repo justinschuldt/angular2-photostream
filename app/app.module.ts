@@ -8,11 +8,16 @@ import { AzureServiceModule } from './azureService/azure-service.module';
 
 import { AppComponent }  from './app.component';
 
+// Feature modules
+import { CoreModule }     from './core/core.module';
+import { routing }        from './app.routing';
 
 @NgModule({
   imports: [
     BrowserModule,
-    AzureServiceModule.forRoot({baseUrl: 'http://localhost:3000/', authHeaderName:'X-ZUMO-AUTH'})
+    AzureServiceModule.forRoot({baseUrl: 'http://localhost:3000/', authHeaderName:'X-ZUMO-AUTH'}),
+    CoreModule.forRoot({userName: 'J-Dizzle'}),
+    routing
   ],
   declarations: [ AppComponent ],
   bootstrap: [
