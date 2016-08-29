@@ -31,17 +31,14 @@ export interface Image {
 export class AppComponent {
     images: Image[]
     constructor(private azureService: AzureService) {
-        azureService.someFun({email:'user@domain.com',password:'password'})
+        azureService.api('login').post({email:'user@domain.com',password:'password'})
             .subscribe(
                 data => {
-                    console.debug('login response: ', data)
-                    this.setAuth(data.token)
-                    
-                    azureService.getImages()
-                        .subscribe(
-                            data => this.images = data,
-                            error => console.error('error', error)
-                        )
+                    // set a token for all future requests
+                    this.setAuth(data.token);
+                    // now that our service has a token,
+                    // call a protected api to get some data
+                    this.getImages();
                 },
                 error => console.error('login error: ', error)
             )
@@ -50,12 +47,9 @@ export class AppComponent {
          this.azureService.setAuthToken(token)
     }
     getImages(): void {
-        this.azureService.getImages()
+        this.azureService.table('images').getAll()
             .subscribe(
-                data => {
-                    console.log('images data: ', data)
-                //    this.images = data
-                },
+                data => this.images = data,
                 error => console.error('error', error)
             )
     }
