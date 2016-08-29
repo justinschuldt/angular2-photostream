@@ -19,9 +19,12 @@ export interface Image {
     template: 
     '<h1>My First Angular 2 App</h1>' +
     '<div *ngFor="let image of images">' +
-        '<div>{{image.title}}</div>' + 
+        '<h3>{{image.title}}</h3>' + 
         '<img src="{{image.imageUrl}}" style="height:100px">' +
-        '<span *ngFor="let item of image.tags">{{item.tag}}</span>' +
+        '<div>{{image.createdAt | date}}</div>' +
+        '<div>Tags: ' +
+            '<span *ngFor="let item of image.tags">{{item.tag}} </span>' +
+        '</div>' +
     '</div>'
 
 })
