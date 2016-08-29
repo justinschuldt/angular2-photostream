@@ -1,19 +1,37 @@
-import {NgModule, ModuleWithProviders} from "@angular/core";
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {
+    NgModule,
+    ModuleWithProviders,
+    Optional,
+    SkipSelf
+} from "@angular/core";
 
-
-import {AzureService, ApiService, TokenService, TableService} from "./azure.service";
-import { AzureServiceConfig } from './azure.service';
-// import {TableService} from './table.service';
-// import {ApiService} from './api.service';
-// import {TokenService} from './token.service';
+import {
+    AzureService,
+    AzureServiceConfig,
+    ApiService,
+    TableService,
+    TokenService
+} from "./azure.service";
 
 @NgModule({})
 export class SharedModule {
+
+  constructor (@Optional() @SkipSelf() parentModule: SharedModule) {
+    if (parentModule) {
+      throw new Error(
+        'CoreModule is already loaded. Import it in the AppModule only');
+    }
+  }
     static forRoot(config: AzureServiceConfig):ModuleWithProviders {
         return {
             ngModule: SharedModule,
-            providers: [{provide: AzureServiceConfig, useValue: config}, AzureService, TokenService, ApiService, TableService]
+            providers: [
+                {provide: AzureServiceConfig, useValue: config},
+                AzureService,
+                TokenService,
+                ApiService,
+                TableService
+            ]
         };
     }
 }

@@ -1,11 +1,10 @@
-import { NgModule, Component, Optional }      from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Http,HttpModule, HTTP_PROVIDERS, ConnectionBackend } from '@angular/http';
+import { HTTP_PROVIDERS } from '@angular/http';
 
-import { AzureService }     from './azureService/azure.service';
-import { AzureServiceConfig } from './azureService/azure.service';
-import { SharedModule }     from './azureService/shared.module';
-
+// I think this is still needed, though it works without it...
+// import { AzureService, AzureServiceConfig } from './azureService/azure.service';
+import { SharedModule } from './azureService/shared.module';
 
 import { AppComponent }  from './app.component';
 
@@ -20,6 +19,4 @@ import { AppComponent }  from './app.component';
      ],
   providers: [HTTP_PROVIDERS]
 })
-export class AppModule {
-  constructor (azureService: AzureService) { }
- }
+export class AppModule { }

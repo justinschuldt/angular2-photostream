@@ -2,20 +2,13 @@
 // export * from './api.service';
 // export * from './token.service';
 
-// from sample
-import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
-import { HttpModule, XHRBackend }              from '@angular/http';
-
-// from beaoon-mobile
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { CommonModule }      from '@angular/common';
 
 import { Observable }     from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
-
 
 export class AzureServiceConfig {
     baseUrl: string = 'http://asdf.com/';
