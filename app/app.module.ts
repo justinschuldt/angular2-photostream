@@ -1,8 +1,8 @@
 import { NgModule, Component }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_PROVIDERS, ConnectionBackend } from '@angular/http';
+import { Http,HttpModule, HTTP_PROVIDERS, ConnectionBackend } from '@angular/http';
 
-import { AzureService, TokenService }     from './azureService/azure.service';
+import { AzureService }     from './azureService/azure.service';
 import { SharedModule }     from './azureService/shared.module';
 
 
@@ -15,9 +15,10 @@ import { AppComponent }  from './app.component';
   ],
   declarations: [ AppComponent ],
   bootstrap: [
-    AppComponent,
-    HTTP_PROVIDERS,
-    ConnectionBackend
-     ]
+    AppComponent
+     ],
+  providers: [HTTP_PROVIDERS]
 })
-export class AppModule { }
+export class AppModule {
+  constructor (azureService: AzureService) { }
+ }
