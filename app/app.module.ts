@@ -11,12 +11,18 @@ import { AppComponent }  from './app.component';
 // Feature modules
 import { CoreModule }     from './core/core.module';
 import { routing }        from './app.routing';
+import { SharedModule } from './shared/shared.module';
+import { WelcomeModule } from './welcome/welcome.module';
+//import { ImageModule } from './image/image.module';
+//import { SampleModule } from './sample/sample.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     AzureServiceModule.forRoot({baseUrl: 'http://localhost:3000/', authHeaderName:'X-ZUMO-AUTH'}),
     CoreModule.forRoot({userName: 'J-Dizzle'}),
+    WelcomeModule,
+
     routing
   ],
   declarations: [ AppComponent ],
