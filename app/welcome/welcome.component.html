@@ -1,19 +1,32 @@
-<!--<h2>Contact of {{userName}}</h2>
+<h2>Welcome {{userName}}!</h2>
 <div *ngIf="msg" class="msg">{{msg}}</div>
 
-<form (ngSubmit)="checkEmail()" #welcomeForm="ngForm">
+<form *ngIf="emailFound === null" (ngSubmit)="checkEmail(email)" #welcomeForm="ngForm">
   <div class="form-group">
-    <label for="email">Email</label>
-    <input type="text" class="form-control" required
+    <label for="input0">Email</label>
+    <input type="email" class="form-control" required
       [(ngModel)]="email"
-        name="email"  #email="ngModel" >
-    <div [hidden]="email.valid" class="alert alert-danger">
+        name="input0"  #input0="ngModel" >
+    <div [hidden]="input0.valid" class="alert alert-danger">
       Email is required
     </div>
   </div>
   <br>
-  <button type="submit" class="btn btn-default" [disabled]="!welcomeForm.form.valid">Save</button>
-  <button type="button" class="btn" (click)="next()" [disabled]="!welcomeForm.form.valid">Next Contact</button>
-  <button type="button" class="btn" (click)="newContact()">New Contact</button>
-</form>-->
-<h2>welcome component</h2>
+  <button type="submit" class="btn btn-default" [disabled]="!welcomeForm.form.valid">Next</button>
+</form>
+
+<form *ngIf="emailFound" 
+  (ngSubmit)="emailFound ? login(email, password) : createAccount(email, password)"
+  #passwordForm="ngForm">
+  <div class="form-group">
+    <label for="input1">Password</label>
+    <input type="password" class="form-control" required
+      [(ngModel)]="password"
+        name="input1"  #input1="ngModel" >
+    <div [hidden]="input1.valid" class="alert alert-danger">
+      Password is required
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-default" [disabled]="!passwordForm.form.valid">Signup</button>
+</form>

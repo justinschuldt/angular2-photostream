@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AzureService } from '../azureService/azure.service'
-import 'rxjs/add/operator/filter'
+import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/operator/concatMap'
 
 export interface User {
     id: string;
@@ -16,8 +17,7 @@ export class WelcomeService {
     constructor(private azureService:AzureService) { }
 
   checkForEmail(email: string) {
-    return this.azureService.table('users').getAll()
-        .filter(item => item.email === email);
+    return this.azureService.table('users').where({email: email});
   }
 
   login(email: string, password: string) {
