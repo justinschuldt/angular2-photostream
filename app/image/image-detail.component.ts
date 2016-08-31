@@ -9,7 +9,7 @@ import { Image, ImageService } from './image.service';
       <img src="{{image.imageUrl}}">
       <div>{{image.createdAt | date}}</div>
       <div>Tags: 
-        <span *ngFor="let sub of image.tags">{{sub.tag}} </span>
+        <span *ngFor="let sub of image?.tags">{{sub.tag}} </span>
       </div>
     <br>
     <a routerLink="../list">back</a>
@@ -29,7 +29,7 @@ export class ImageDetailComponent implements OnInit {
      this.imageService.getImage(this.id).subscribe(
        data => {
          console.log(data)
-         this.image = data;
+         //this.image = data;
        },
        error => console.error(error)
      )
