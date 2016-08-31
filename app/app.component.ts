@@ -22,20 +22,8 @@ export interface Image {
       <a routerLink="welcome" routerLinkActive="active">Welcome</a>
       <a routerLink="sample"  routerLinkActive="active">Sample Module</a>
       <a routerLink="image"  routerLinkActive="active">Image Module</a>
-
     </nav>
-    <router-outlet></router-outlet>
-    `
-    // '<h1>My First Angular 2 App</h1>' +
-    // '<div *ngFor="let image of images">' +
-    //     '<h3>{{image.title}}</h3>' + 
-    //     '<img src="{{image.imageUrl}}" style="height:100px">' +
-    //     '<div>{{image.createdAt | date}}</div>' +
-    //     '<div>Tags: ' +
-    //         '<span *ngFor="let item of image.tags">{{item.tag}} </span>' +
-    //     '</div>' +
-    // '</div>'
-
+    <router-outlet></router-outlet>`
 })
 export class AppComponent {
     subtitle = 'interpolated text goodness!';
@@ -45,7 +33,8 @@ export class AppComponent {
             .subscribe(
                 data => {
                     // set a token for all future requests
-                    this.azureService.setAuthToken(data.token)
+                    console.log('this is still happening: ', data)
+                    azureService.setAuthToken(data.token)
                     // now that our service has a token,
                     // call a protected api to get some data
                     this.getImages();
