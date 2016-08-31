@@ -28,7 +28,8 @@ export class ImageService {
   }
 
   getImage(id: string) {
-    return this.getImages().filter(item => item.id === id);
+    // TODO filter the data that has already come from the server
+    return this.azureService.table('images').getById(id);
   }
 
 }

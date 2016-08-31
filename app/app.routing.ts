@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 export const routes: Routes = [
   { path: '', redirectTo: 'welcome', pathMatch: 'full'},
   { path: 'sample', loadChildren: 'app/sample/sample.module#SampleModule' },
-  { path: 'images', loadChildren: 'app/image/image.module#ImageModule' }
+  { path: 'image', loadChildren: 'app/image/image.module#ImageModule' }
 ];
 
 export const appRoutingProviders: any[] = [
