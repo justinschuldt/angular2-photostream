@@ -17,6 +17,7 @@ export class TableService {
         private http: Http,
         private tokenService: TokenService
     ) {
+        console.log('table service ran');
         this.tokenService.token$
             .subscribe(
                 token => this.token = token
@@ -40,9 +41,11 @@ export class TableService {
     }
     getById(id: string): Observable<{}>{
         let fullUrl = this.tableUrl + this.tableName + '/' + id;
-
+console.log('token: ', this.token);
         let headers = new Headers({ [this.authHeaderName]: this.token });
+
         let options = new RequestOptions({ headers: headers });
+        console.log('options: ', options);
         return this.http.get(fullUrl)
             .map(this.extractData)
             .catch(this.handleError);

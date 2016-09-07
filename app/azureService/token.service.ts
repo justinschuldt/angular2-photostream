@@ -12,6 +12,7 @@ export class TokenService {
     token$ = this.tokenSubject.asObservable();
 
     setAuthToken(token: string): void{
+        console.debug('token set to: ', token);
         this.tokenSubject.next(token);
     }
 }
